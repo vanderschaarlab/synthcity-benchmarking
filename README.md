@@ -58,9 +58,8 @@ To run the experiments first make sure the data is in the correct location as de
 The benchmark scripts can be used in two ways 1) via notebook, 2) via terminal.
 
 ### :book: Notebooks
-#### Standard static experiment
 
-Open the notebook and run the cells. Edit the final cell to adjust which dataset/models you want to run.
+Open the relevant notebook and run the cells. Edit the final cell to adjust which dataset/models you want to run.
 
 #### :gear: Terminal
 
@@ -81,7 +80,7 @@ Temporal:
 bash run_temporal_benchmarks.sh
 ```
 
-## Citation
+<!-- ## Citation
 If our paper or code helped you in your own research, please cite our work as:
 
 ```
@@ -91,4 +90,4 @@ If our paper or code helped you in your own research, please cite our work as:
   booktitle={Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks},
   year={2023}
 }
-```
+``` -->
