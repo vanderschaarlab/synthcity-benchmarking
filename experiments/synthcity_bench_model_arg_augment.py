@@ -33,25 +33,27 @@ def run_dataset(loader, workspace_path, model):
             },
             workspace=workspace_path,
             repeats=5,
+            device="cpu",
         )
         print(score)
     except Exception as e:
-        print("\n\n", e)
-        print(workspace_path, model, "classification", KWARGS)
+        print("\n\nSkipping dataset: ", e)
         score = None
 
     return score
 
 
 def run_synthcity(model="ctgan"):
-    file_path = f"../data/augmentation/"
-    workspace_path = Path("../workspace/augmentation/")
-    result_path = f"../results/augmentation/{model}"
+    cwd = Path.cwd()
+    if cwd.name == "experiments":
+        cwd = cwd.parent
+    file_path = (cwd / Path("data/augmentation/")).resolve()
+    workspace_path = (cwd / Path("workspace/augmentation/")).resolve()
+    result_path = (cwd / Path(f"results/augmentation/{model}")).resolve()
     Path(result_path).mkdir(parents=True, exist_ok=True)
 
     # Load and Prep data
     file = "covid_normalised_numericalised.csv"
-    print(f"{file_path}/{file}")
     X = pd.read_csv(f"{file_path}/{file}")
     time_horizon = 14
     X.loc[
@@ -78,6 +80,7 @@ def run_synthcity(model="ctgan"):
         random_state=42,
     )
 
+    print(f"Running synthcity benchmark: {model}")
     score = run_dataset(loader, workspace_path, model)
     if score:
         with open(f"{result_path}/{file}-{model}-{KWARGS_str}.pkl", "wb") as f:

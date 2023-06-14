@@ -30,19 +30,22 @@ def run_dataset(X, workspace_path, model, task_type="regression"):
             },
             workspace=workspace_path,
             repeats=1,
+            device="cpu",
         )
     except Exception as e:
-        print("\n\n", e)
-        print(workspace_path, model, task_type, KWARGS)
+        print("\n\nSkipping dataset: ", e)
         score = None
 
     return score
 
 
 def run_synthcity(data_type="num", task_type="regression", model="ctgan"):
-    file_path = f"../data/{data_type}/{task_type}/"
-    workspace_path = Path(f"../workspace/{data_type}/{task_type}/")
-    result_path = f"../results/{data_type}/{task_type}/{model}"
+    cwd = Path.cwd()
+    if cwd.name == "experiments":
+        cwd = cwd.parent
+    file_path = (cwd / Path(f"data/{data_type}/{task_type}/")).resolve()
+    workspace_path = (cwd / Path("workspace/{data_type}/{task_type}/")).resolve()
+    result_path = (cwd / Path(f"results/{data_type}/{task_type}/{model}")).resolve()
     Path(result_path).mkdir(parents=True, exist_ok=True)
 
     # list files in the file_path
@@ -59,7 +62,9 @@ def run_synthcity(data_type="num", task_type="regression", model="ctgan"):
         X["y"] = y
 
         score = run_dataset(X, workspace_path, model, task_type=task_type)
+        print(f"{result_path}/{file}-{model}-{KWARGS_str}.pkl")
         if score:
+            print(score)
             with open(f"{result_path}/{file}-{model}-{KWARGS_str}.pkl", "wb") as f:
                 pickle.dump(score, f)
 

@@ -5,8 +5,7 @@ from pathlib import Path
 import synthcity.logger as log
 from synthcity.benchmark import Benchmarks
 from synthcity.plugins.core.dataloader import TimeSeriesDataLoader
-from synthcity.utils.datasets.time_series.google_stocks import \
-    GoogleStocksDataloader
+from synthcity.utils.datasets.time_series.google_stocks import GoogleStocksDataloader
 from synthcity.utils.datasets.time_series.pbc import PBCDataloader
 from synthcity.utils.datasets.time_series.sine import SineDataloader
 
@@ -36,12 +35,12 @@ def run_dataset(loader, workspace_path, model):
                 ],
             },
             workspace=workspace_path,
-            repeats=2,
+            repeats=1,
+            device="cpu",
         )
         print(score)
     except Exception as e:
-        print("\n\n", e)
-        print(workspace_path, model, "time_series", KWARGS)
+        print("\n\nSkipping dataset: ", e)
         score = None
 
     return score
@@ -53,9 +52,12 @@ def run_synthcity(model="ctgan", dataset_loader_name="sine"):
         "googlestocks": GoogleStocksDataloader,
         "pbc": PBCDataloader,
     }
-    file_path = f"../data/time_series/"
-    workspace_path = Path("../workspace/time_series/")
-    result_path = f"../results/time_series/{model}"
+    cwd = Path.cwd()
+    if cwd.name == "experiments":
+        cwd = cwd.parent
+    workspace_path = (cwd / Path("workspace/time_series/")).resolve()
+    result_path = (cwd / Path(f"results/time_series/{model}")).resolve()
+
     Path(result_path).mkdir(parents=True, exist_ok=True)
 
     # Load and Prep data

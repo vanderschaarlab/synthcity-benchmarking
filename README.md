@@ -64,7 +64,7 @@ Open the notebook and run the cells. Edit the final cell to adjust which dataset
 
 #### :gear: Terminal
 
-The full set of experiments (all models and all datasets) can be run using the following three scripts:
+The full set of experiments (all models and all datasets) can be run using the below three commands. This may take some considerable time. If this is not desirable, it is recommended to use the notebooks.
 
 Standard static:
 ```
