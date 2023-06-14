@@ -1,0 +1,10 @@
+setuptools
+pytest
+pytest-cov
+pre-commit
+isort
+Black
+flake8
+bandit
+mypy
+pylint

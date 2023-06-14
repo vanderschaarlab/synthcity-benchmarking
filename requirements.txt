@@ -1,0 +1,2 @@
+openml>=0.13.1
+synthcity[all]>=0.2.7

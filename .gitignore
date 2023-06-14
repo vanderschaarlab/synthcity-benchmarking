@@ -10,6 +10,7 @@
 *.pot
 __pycache__/*
 .cache/*
+.*_cache
 .*.swp
 */.ipynb_checkpoints/*
 .DS_Store
@@ -52,3 +53,21 @@ MANIFEST
 .venv*/
 .conda*/
 .python-version
+
+# Data and results
+data/*
+!data/.gitkeep
+results/*
+!results/.gitkeep
+tests/data/
+tests/results/
+
+# workspaces
+/tutorials/workspace/
+workspace/
+src/workspace/
+
+# logs
+synthcity_logs
+experiments/synthcity_logs
+tutorials/synthcity_logs
