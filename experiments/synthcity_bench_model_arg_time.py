@@ -6,7 +6,6 @@ import synthcity.logger as log
 from synthcity.benchmark import Benchmarks
 from synthcity.plugins.core.dataloader import TimeSeriesDataLoader
 from synthcity.utils.datasets.time_series.google_stocks import GoogleStocksDataloader
-from synthcity.utils.datasets.time_series.pbc import PBCDataloader
 from synthcity.utils.datasets.time_series.sine import SineDataloader
 
 log.add("synthcity_logs", "INFO")
@@ -50,7 +49,6 @@ def run_synthcity(model="ctgan", dataset_loader_name="sine"):
     dataset_loaders = {
         "sine": SineDataloader,
         "googlestocks": GoogleStocksDataloader,
-        "pbc": PBCDataloader,
     }
     cwd = Path.cwd()
     if cwd.name == "experiments":
@@ -67,22 +65,13 @@ def run_synthcity(model="ctgan", dataset_loader_name="sine"):
         observation_times,
         outcome,
     ) = dataset_loaders[dataset_loader_name.lower()]().load()
-    if dataset_loader_name.lower() == "pbc":
-        T, E = outcome
-        loader = TimeSeriesDataLoader(
-            temporal_data=temporal_data,
-            observation_times=observation_times,
-            static_data=static_data,
-            T=T,
-            E=E,
-        )
-    else:
-        loader = TimeSeriesDataLoader(
-            temporal_data=temporal_data,
-            observation_times=observation_times,
-            static_data=static_data,
-            outcome=outcome,
-        )
+
+    loader = TimeSeriesDataLoader(
+        temporal_data=temporal_data,
+        observation_times=observation_times,
+        static_data=static_data,
+        outcome=outcome,
+    )
     print(loader.dataframe().head())
 
     score = run_dataset(loader, workspace_path, model)
@@ -106,7 +95,7 @@ if __name__ == "__main__":
         "--dataset",
         type=str,
         default="googlestocks",
-        choices=["googlestocks", "sine", "pbc"],
+        choices=["googlestocks", "sine"],
     )
 
     args = parser.parse_args()
