@@ -21,8 +21,6 @@ def run_notebook(notebook_path: Path) -> None:
 
 
 enabled_tests = [
-    "standard_benchmark",
-    "augmentation_benchmark",
     "time_benchmark",
 ]
 

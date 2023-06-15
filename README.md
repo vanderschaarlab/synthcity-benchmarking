@@ -37,6 +37,7 @@ The data for the standard benchmarks can be obtained by running the following co
 ```
 bash get_data.sh
 ```
+One small data file is included in the repository for your convenience, but this command will retieve the rest.
 
 The data used for the augmentation benchmark experiment is the SIVEP-Gripe public dataset, which contains anonymized records of COVID-19 patients in Brazil. See the following paper for more details:
 
