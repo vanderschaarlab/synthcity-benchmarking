@@ -56,7 +56,11 @@ MANIFEST
 
 # Data and results
 data/*
-!data/.gitkeep
+!data/num
+data/num/*
+!data/num/regression
+data/num/regression/*
+!data/num/regression/287.pkl
 results/*
 !results/.gitkeep
 tests/data/
